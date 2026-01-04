@@ -20,7 +20,7 @@
 * **☁️ Google Sheets 연동**:
     * 별도의 데이터베이스 서버 없이 구글 시트를 백엔드 DB로 사용합니다.
     * 데이터는 시트의 **6행**부터 저장되어, 상단(1~5행)을 자유롭게 꾸밀 수 있습니다.
-    * 1~20위는 왼쪽(A열), 21~40위는 오른쪽(D열)에 저장되는 직관적인 구조입니다.
+    * 1-20위는 왼쪽(A열), 21-40위는 오른쪽(D열)에 저장되는 직관적인 구조입니다.
 
 ## 🛠️ 기술 스택 (Tech Stack)
 
@@ -41,27 +41,30 @@ holdem-ranking/
 ├── malgunbd.ttf         # 폰트 파일
 └── .streamlit/
     └── secrets.toml     # [주의] 구글 API 키 (깃허브 업로드 금지!)
-🚀 설치 및 실행 방법 (Installation)
+```
+
+## 🚀 설치 및 실행 방법 (Installation)
 이 프로젝트를 로컬 컴퓨터에서 실행하려면 다음 단계가 필요합니다.
 
 1. 저장소 복제 (Clone)
 Bash
-
 git clone [https://github.com/YOUR_ID/holdem-ranking.git](https://github.com/YOUR_ID/holdem-ranking.git)
 cd holdem-ranking
-2. 가상환경 설정 및 라이브러리 설치
-Bash
 
-# 가상환경 생성 (선택사항)
+2. 가상환경 설정 및 라이브러리 설치
+```Bash
+### 가상환경 생성 (선택사항)
 python -m venv venv
 source venv/bin/activate  # Mac/Linux
 venv\Scripts\activate     # Windows
 
-# 라이브러리 설치
+### 라이브러리 설치
 pip install -r requirements.txt
+```
+
 3. Google Cloud 인증 설정 (필수)
 프로젝트 루트에 .streamlit 폴더를 만들고 secrets.toml 파일을 생성하여 구글 서비스 계정 키를 입력해야 합니다.
-
+```
 .streamlit/secrets.toml
 
 Ini, TOML
@@ -73,16 +76,20 @@ private_key_id = "your-private-key-id"
 private_key = "-----BEGIN PRIVATE KEY-----..."
 client_email = "your-service-account-email"
 ...
+```
 4. 앱 실행
-Bash
-
+```Bash
 streamlit run app.py
-📋 구글 시트 설정 가이드
+```
+
+### 📋 구글 시트 설정 가이드
+
 Google Sheets를 새로 생성하고 이름을 코드의 SHEET_NAME과 동일하게 설정합니다. (기본값: Holdem_Ranking)
 
 secrets.toml에 있는 client_email 주소를 해당 시트의 '편집자(Editor)' 로 초대합니다.
 
 데이터는 6행부터 자동으로 기록됩니다. 1~5행에는 자유롭게 로고나 안내 문구를 넣으세요.
 
-📄 라이선스
+
+## 📄 라이선스
 This project is licensed under the MIT License.
