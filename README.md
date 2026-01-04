@@ -93,3 +93,9 @@ secrets.toml에 있는 client_email 주소를 해당 시트의 '편집자(Editor
 
 ## 📄 라이선스
 This project is licensed under the MIT License.
+
+<img width="1360" height="1154" alt="웹페이지 화면" src="https://github.com/user-attachments/assets/69fe1045-ac26-4134-86bf-96af4154cafc" />
+
+<img width="568" height="550" alt="구글시트 승점표 화면" src="https://github.com/user-attachments/assets/409b00e9-c1c6-4acf-b99d-745c2088f920" />
+
+
