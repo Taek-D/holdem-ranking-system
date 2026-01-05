@@ -70,17 +70,20 @@ st.markdown("""
         color: #FFD700 !important;
         font-family: 'Helvetica', sans-serif !important;
     }}
+    /* 4. 버튼 스타일 (검정 배경 + 금색 글씨) */
     .stButton>button {{
-        color: #000000;
-        background-color: #FFD700;
-        border: none;
+        color: #FFD700 !important; 
+        background-color: #000000 !important; 
+        border: 1px solid #FFD700 !important; 
         font-weight: bold;
         width: 100%;
         font-family: 'Helvetica', sans-serif;
+        transition: all 0.3s ease;
     }}
     .stButton>button:hover {{
-        background-color: #FFC000;
-        color: #000000;
+        background-color: #FFD700 !important; 
+        color: #000000 !important; 
+        border: 1px solid #000000 !important;
     }}
     table {{
         width: 100%;
