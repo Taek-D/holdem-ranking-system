@@ -12,7 +12,7 @@ from google.oauth2.service_account import Credentials
 FONT_FILE = 'malgunbd.ttf' 
 BG_IMAGE_FILE = 'bounty_bg.png' 
 SHEET_NAME = 'Holdem_Ranking' 
-
+SHEET_URL = "https://docs.google.com/spreadsheets/d/1pR29ZbKQQIwgR6FyDt1VSU4v6DWjDzwI1bycfszzLlU/edit?gid=151586153#gid=151586153"
 # --- [설정] 디자인 컬러 팔레트 ---
 COLOR_TEXT_MAIN = "#3E2723" 
 COLOR_RED = "#B71C1C"       
@@ -458,20 +458,30 @@ if not df.empty:
             st.markdown(make_html_table(df_next20), unsafe_allow_html=True)
 
     st.markdown("<br><hr style='border:1px solid #3E2723'>", unsafe_allow_html=True)
-    col_a, col_b = st.columns(2)
+    
+    # [수정] 버튼 레이아웃 변경 (이미지 발행 | 엑셀 다운 & 시트 이동)
+    col_a, col_b = st.columns([1, 1]) 
+    
     with col_a:
-        if st.button("📜 현상 수배지(이미지) 발행"):
+        # use_container_width=True를 쓰면 버튼이 칸에 꽉 차서 보기 좋습니다.
+        if st.button("📜 현상 수배지(이미지) 발행", use_container_width=True):
             with st.spinner("수배지 인쇄 중..."):
                 img = create_ranking_image(df)
                 if img:
                     buf = io.BytesIO()
                     img.save(buf, format="PNG")
-                    st.download_button("📥 수배지 다운로드", buf.getvalue(), f"wanted_list_{CURRENT_MONTH}.png", "image/png")
-    with col_b:
-        st.download_button("📂 장부(엑셀) 다운로드", rank_df.to_csv(index=False).encode('utf-8-sig'), "bounty_ledger.csv", "text/csv")
+                    st.download_button("📥 수배지 다운로드", buf.getvalue(), f"wanted_list_{CURRENT_MONTH}.png", "image/png", use_container_width=True)
     
+    with col_b:
+        # 오른쪽 칸을 다시 반으로 나눠서 버튼 2개를 배치
+        b1, b2 = st.columns(2)
+        with b1:
+            st.download_button("📂 장부(엑셀) 다운로드", rank_df.to_csv(index=False).encode('utf-8-sig'), "bounty_ledger.csv", "text/csv", use_container_width=True)
+        with b2:
+            # [추가] 새 탭에서 구글 시트 열기
+            st.link_button("🔗 시트 바로가기", SHEET_URL, use_container_width=True)
+
     with st.expander("🛠️ 장부 직접 수정 (보안관용)"):
-        # 순위 컬럼은 수정 불가하게 설정할 수도 있지만, 여기선 간단히 전체 표시
         edited_df = st.data_editor(rank_df, use_container_width=True, num_rows="dynamic")
         if st.button("💾 수정 사항 기록"):
             save_data(edited_df[['닉네임', '점수']])
