@@ -70,7 +70,6 @@ st.markdown("""
         color: #FFD700 !important;
         font-family: 'Helvetica', sans-serif !important;
     }}
-    /* 4. 버튼 스타일 (검정 배경 + 금색 글씨) */
     .stButton>button {{
         color: #FFD700 !important; 
         background-color: #000000 !important; 
