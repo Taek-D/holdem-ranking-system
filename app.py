@@ -39,10 +39,14 @@ bg_base64 = get_image_base64(BG_IMAGE_FILE)
 
 # --- [디자인] Streamlit 웹 테마 ---
 st.set_page_config(page_title="ACE's Wanted List", page_icon="🤠", layout="wide")
-
+# --- [디자인] Streamlit 웹 테마 및 CSS 스타일 통합 ---
 st.markdown("""
     <link href="https://fonts.googleapis.com/css2?family=Rye&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    """, unsafe_allow_html=True)
+
+st.markdown(f"""
     <style>
+    /* 1. 메인 화면 설정 */
     .stApp {{
         background-image: url("data:image/jpg;base64,{bg_base64}");
         background-size: cover;
@@ -51,6 +55,7 @@ st.markdown("""
         color: {COLOR_TEXT_MAIN};
         font-family: 'Playfair Display', serif;
     }}
+    
     .main-title {{
         color: {COLOR_RED} !important;
         font-family: 'Rye', cursive !important;
@@ -60,6 +65,8 @@ st.markdown("""
         text-align: center;
         margin-bottom: 20px;
     }}
+    
+    /* 2. 사이드바 (블랙 & 골드) */
     [data-testid="stSidebar"] {{
         background-color: #161B22; 
         border-right: 1px solid #FFD700; 
@@ -70,20 +77,48 @@ st.markdown("""
         color: #FFD700 !important;
         font-family: 'Helvetica', sans-serif !important;
     }}
-    .stButton>button {{
-        color: #FFD700 !important; 
-        background-color: #000000 !important; 
-        border: 1px solid #FFD700 !important; 
+    
+    /* 3. 버튼 스타일 (사이드바 & 메인 통합, 검정 배경 + 금색 글씨) */
+    .stButton > button {{
+        color: #FFD700 !important;
+        background-color: #000000 !important;
+        border: 1px solid #FFD700 !important;
         font-weight: bold;
         width: 100%;
         font-family: 'Helvetica', sans-serif;
         transition: all 0.3s ease;
     }}
-    .stButton>button:hover {{
-        background-color: #FFD700 !important; 
-        color: #000000 !important; 
+    .stButton > button:hover {{
+        background-color: #FFD700 !important;
+        color: #000000 !important;
         border: 1px solid #000000 !important;
     }}
+    
+    /* 사이드바 전용 버튼 강제 적용 */
+    [data-testid="stSidebar"] .stButton > button {{
+        color: #FFD700 !important;
+        background-color: #000000 !important;
+        border: 1px solid #FFD700 !important;
+    }}
+
+    /* 4. 링크 버튼 (시트 바로가기) 스타일 */
+    .stLinkButton > a {{
+        color: #FFD700 !important;
+        background-color: #000000 !important;
+        border: 1px solid #FFD700 !important;
+        font-weight: bold;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+    }}
+    .stLinkButton > a:hover {{
+        background-color: #FFD700 !important;
+        color: #000000 !important;
+    }}
+
+    /* 5. 랭킹 테이블 CSS */
     table {{
         width: 100%;
         border-collapse: separate;
@@ -116,8 +151,30 @@ st.markdown("""
     }}
     tr.wanted-poster td:first-child {{ border-left: 2px solid {COLOR_TEXT_MAIN}; border-radius: 5px 0 0 5px; }}
     tr.wanted-poster td:last-child {{ border-right: 2px solid {COLOR_TEXT_MAIN}; border-radius: 0 5px 5px 0; }}
+
+    /* 6. 모바일 반응형 최적화 (폰 화면) */
+    @media (max-width: 768px) {{
+        .block-container {{
+            padding-top: 2rem !important;
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }}
+        .main-title {{
+            font-size: 1.8rem !important;
+        }}
+        th {{
+            font-size: 0.9rem !important;
+        }}
+        td {{
+            font-size: 0.8rem !important;
+        }}
+        .stButton>button, .stLinkButton>a {{
+            font-size: 1rem !important;
+            padding: 0.5rem !important;
+        }}
+    }}
     </style>
-    """.format(bg_base64=bg_base64, COLOR_TEXT_MAIN=COLOR_TEXT_MAIN, COLOR_RED=COLOR_RED), unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
 
 # --- [함수] 구글 시트 연결 및 데이터 로드/저장 ---
 @st.cache_resource
